@@ -165,7 +165,7 @@ $(function() {
           //bounds
           this.checkBounds(coordinates);
          
-         this.checkCollision(coordinates);
+         //this.checkCollision(coordinates);
           if (this.collided) {
             ctx.fillStyle = ctx.strokeStyle == "red" ? "rgb(150,150,150)" : "red" ;
           	alert('victory!!!');
