@@ -84,7 +84,7 @@ Vector.prototype = {
 $(function() {
   var canvasWidth,
       canvasHeight,
-      r = 15,
+      r = 20,
       canvas = document.getElementById('canvas'),
       context = canvas.getContext('2d'),
       cvs = document.getElementById('cvs'),
@@ -157,7 +157,7 @@ $(function() {
         ctx.fillStyle = "rgb(150,150,150)";
         //ctx.lineWidth = 10;
         ctx.beginPath();
-        ctx.arc(coordinates.x, coordinates.y, 20, 0, Math.PI * 2, true);
+        ctx.arc(coordinates.x, coordinates.y, 25, 0, Math.PI * 2, true);
         ctx.fill();
     },
     move: function(coordinates) {
