@@ -94,7 +94,8 @@ $(function() {
       bound = {
           x1: 0,
           y1: 0
-      };
+      },
+      currentScore = 10000;
   var resizeCvs = function() {
     canvasWidth = $(window).width();
     canvasHeight = $(window).height();
@@ -235,7 +236,7 @@ $(function() {
       draw: function() {
                       //draw Ball
         if (this.collided) {
-          alert("victory!");
+          alert("victory! Your score: " + currentScore);
         }
           context.fillStyle = this.collided === true ? 'red' : '#bada55';
           context.beginPath();
@@ -243,7 +244,7 @@ $(function() {
           context.fill();
       },
       move: function() {
-
+		  currentScore = currentScore - 15;
           this.velocity = this.velocity.add(g);
           initLevel();
 
