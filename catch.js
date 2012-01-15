@@ -237,6 +237,7 @@ $(function() {
                       //draw Ball
         if (this.collided) {
           alert("victory! Your score: " + currentScore);
+          currentScore = 10000;
         }
           context.fillStyle = this.collided === true ? 'red' : '#bada55';
           context.beginPath();
