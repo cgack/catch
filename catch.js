@@ -256,7 +256,7 @@ $(function() {
               window.oRequestAnimationFrame      || 
               window.msRequestAnimationFrame     || 
               function(/* function */ callback, /* DOMElement */ element){
-                window.setTimeout(callback, 1000 / 10);
+                window.setTimeout(callback, 1000 / 30);
               };
     })();
   var bounce = function() {
