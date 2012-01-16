@@ -146,8 +146,10 @@ $(function() {
       draw: function() {
                       //draw Ball
         if (this.collided) {
-          alert("victory! Your score: " + currentScore);
-          currentScore = 10000;
+//          alert("victory! Your score: " + currentScore);
+  			ctx.font = "3em Lucida Console";
+  			ctx.fillText ="victory! Your score: " + currentScore;
+  			currentScore = 10000;
         }
           context.fillStyle = this.collided === true ? 'red' : '#bada55';
           context.beginPath();
