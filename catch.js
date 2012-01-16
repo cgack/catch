@@ -148,7 +148,7 @@ $(function() {
         if (this.collided) {
 //          alert("victory! Your score: " + currentScore);
   			ctx.font = "3em Lucida Console";
-  			ctx.fillText ="victory! Your score: " + currentScore;
+  			ctx.fillText("victory! Your score: " + currentScore, 200, 200);
   			currentScore = 10000;
         }
           context.fillStyle = this.collided === true ? 'red' : '#bada55';
