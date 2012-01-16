@@ -256,7 +256,6 @@ $(function() {
               window.oRequestAnimationFrame      || 
               window.msRequestAnimationFrame     || 
               function(/* function */ callback, /* DOMElement */ element){
-              	$("#y").html("timeout");
                 window.setTimeout(callback, 1000 / 10);
               };
     })();
