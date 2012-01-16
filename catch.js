@@ -46,7 +46,8 @@ $(function() {
           x1: 0,
           y1: 0
       },
-      currentScore = 10000;
+      currentScore = 10000,
+      victory = false;
   var resizeCvs = function() {
     canvasWidth = $(window).width();
     canvasHeight = $(window).height();
@@ -80,7 +81,9 @@ $(function() {
   var orientationYo = function(ltr, ftb) {
     coor.x = coor.x + ltr;
     coor.y = coor.y + ftb;
-    draw.move(coor);   
+    if (!victory) {
+    	draw.move(coor);   
+    }
   };
   var prevCoor = { x: 0, y: 0 };
   var draw = {
@@ -150,6 +153,7 @@ $(function() {
   			ctx.font = "3em Lucida Console";
   			ctx.fillText("victory! Your score: " + currentScore, 200, 200);
   			currentScore = 10000;
+  			victory = true;
         }
           context.fillStyle = this.collided === true ? 'red' : '#bada55';
           context.beginPath();
@@ -157,17 +161,18 @@ $(function() {
           context.fill();
       },
       move: function() {
-		  currentScore = currentScore - 15;
-          this.velocity = this.velocity.add(g);
-          initLevel();
-
-          this.checkBoundaryCollisions();
-          this.checkObjectCollisions();
-
-          this.position.x += this.velocity.x1;
-          this.position.y += this.velocity.x2;
-          this.draw();
-
+      	  if (!victory) {
+			  currentScore = currentScore - 15;
+			  this.velocity = this.velocity.add(g);
+			  initLevel();
+	
+			  this.checkBoundaryCollisions();
+			  this.checkObjectCollisions();
+	
+			  this.position.x += this.velocity.x1;
+			  this.position.y += this.velocity.x2;
+			  this.draw();
+		}
       },
       checkBoundaryCollisions: function() {
           if (this.position.y > bound.y2) {
