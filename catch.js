@@ -130,7 +130,7 @@ $(function() {
     }
   };
   var coor = { x: 300, y: 150 };
-  draw.start(coor);
+  //draw.start(coor);
 
   var initLevel = function() {
       context.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -290,6 +290,7 @@ $(document).on('click',
   			gameState.playing = true;
   			resizeCvs();
   			bounce();
+  			draw.start(coor);
   		}
   	});
   			
