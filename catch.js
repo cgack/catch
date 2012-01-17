@@ -70,7 +70,29 @@ $(function() {
 					bet = 0;
 				}
 			}, false);
-		}
+		} 
+		//or use keys to move:
+		$(document).keyup(function (e) {
+			// H - 72 - left
+			// L - 76 - right
+			// J - 74 - up
+			// K - 75 - dwn
+			switch (e.which) {
+				case 72: /*H - Left*/
+					coor.x = coor.x - 10;
+					break;
+				case 76: /*L - Right*/
+					coor.x = coor.x + 10;
+					break;
+				case 74: /*J - dwn*/
+					coor.y = coor.y + 10;
+					break;
+				case 75: /*K - up*/
+					coor.y = coor.y - 10;
+					break;
+			}
+		});
+		
 	};
 	
 	var orientationYo = function(ltr, ftb) {
