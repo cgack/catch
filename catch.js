@@ -256,7 +256,7 @@ $(function() {
 		resizeCvs();        
 		ctx.font = "3em Helvetica";
 		ctx.fillText("Use this ->", 200,150);
-		ctx.fillText("Try to catch this ->", 200,200);
+		ctx.fillText("to try and catch this ->", 200,200);
 		ctx.fillText("as quickly as possible", 200,250);
 		ctx.fillText("Tap or Click to begin", 200, 350);
 		//draw ball
@@ -267,7 +267,7 @@ $(function() {
 		
 		ctx.fillStyle = "rgb(150,150,150)";
 		ctx.beginPath();
-		ctx.arc(630, 130, 25, 0, Math.PI * 2, true);
+		ctx.arc(530, 130, 25, 0, Math.PI * 2, true);
 		ctx.fill();
 	};
  
