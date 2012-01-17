@@ -153,7 +153,7 @@ $(function() {
   			initLevel();
   			ctx.font = "3em Lucida Console";
   			ctx.fillText("victory! Your score: " + currentScore, 200,200);
-  			ctx.fillText("Tap or Click to continue", 250, 200);
+  			ctx.fillText("Tap or Click to continue", 200, 250);
   			currentScore = 10000;
   			victory = true;
         }
