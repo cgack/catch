@@ -255,19 +255,19 @@ $(function() {
 	var initCvs = function() {
 		resizeCvs();        
 		ctx.font = "3em Helvetica";
-		ctx.fillText("Use this -", 200,150);
-		ctx.fillText("to try and catch this -", 200,200);
+		ctx.fillText("Use this &#8594;", 200,150);
+		ctx.fillText("to try and catch this &#8594;", 200,200);
 		ctx.fillText("as quickly as possible", 200,250);
 		ctx.fillText("Tap or Click to begin", 200, 350);
 		//draw ball
 		ctx.fillStyle = "#bada55";
 		ctx.beginPath();
-		ctx.arc(655, 185, 20, 0, Math.PI * 2, true);
+		ctx.arc(660, 185, 20, 0, Math.PI * 2, true);
 		ctx.fill();
 		
 		ctx.fillStyle = "rgb(150,150,150)";
 		ctx.beginPath();
-		ctx.arc(430, 130, 25, 0, Math.PI * 2, true);
+		ctx.arc(435, 130, 25, 0, Math.PI * 2, true);
 		ctx.fill();
 	};
  
