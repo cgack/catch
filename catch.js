@@ -241,7 +241,8 @@ $(function() {
 		ctx.font = "3em Helvetica";
 		ctx.fillText("try to catch the ball", 200,200);
 		ctx.fillText("as quickly as possible", 200,250);
-		ctx.fillText("Tap or Click to begin", 200, 300);			
+		ctx.fillText("Tap or Click to begin", 200, 300);
+		$("#y").html("initCvs");
 	};
  
 	initCvs();
