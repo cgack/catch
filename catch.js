@@ -59,14 +59,16 @@ $(function() {
 			//gamma = left to right
 			//beta = front back
 			//alpha = compass dir
-			count = count + 1;
-			gam += e.gamma;
-			bet += e.beta;
-			 
-			if (count === 0 || count % 10 === 0) {
-				orientationYo(gam, bet);
-				gam = 0;
-				bet = 0;
+			if (gameState.playing) {
+				count = count + 1;
+				gam += e.gamma;
+				bet += e.beta;
+				 
+				if (count === 0 || count % 10 === 0) {
+					orientationYo(gam, bet);
+					gam = 0;
+					bet = 0;
+				}
 			}
 		}, false);
 	}
@@ -75,11 +77,11 @@ $(function() {
 		coor.x = coor.x + ltr;
 		coor.y = coor.y + ftb;
 		if (!gameState.victory && gameState.playing) {
-			draw.move(coor);   
+			tgt.move(coor);   
 		}
 	};
   
-	var draw = {
+	var tgt = {
 		isDrawing: false,
 		collided: false,
 		start: function(coordinates) {
@@ -264,7 +266,7 @@ $(function() {
   			gameState.playing = true;
   			resizeCvs();
   			bounce();
-  			draw.start(coor);
+  			tgt.start(coor);
   		}
   	});
 
