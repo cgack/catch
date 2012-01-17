@@ -72,7 +72,7 @@ $(function() {
 			}, false);
 		} 
 		//or use keys to move:
-		$(document).keyup(function (e) {
+		$(document).keydown(function (e) {
 			// H - 72 - left
 			// L - 76 - right
 			// J - 74 - up
