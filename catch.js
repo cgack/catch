@@ -275,6 +275,7 @@ $(function() {
 	initCvs();
 
 	var victory = function() {
+		ctx.fillStyle="black";
 		ctx.font = "3em Helvetica";
 		ctx.fillText("Victory! Your score: " + gameState.currentScore, 200,200);
 		ctx.fillText("Tap or Click to continue", 200, 300);
