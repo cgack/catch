@@ -231,10 +231,6 @@ $(function() {
 		ctx.canvas.height = canvasHeight;
 	};   
    
-	window.onresize = function() {
-		resizeCvs();
-	};
-  
 	var initCvs = function() {
 		resizeCvs();        
 		//bounce();
@@ -270,6 +266,10 @@ $(function() {
   			initOrientation();
   			bounce();
   			tgt.start(coor);
+			window.onresize = function() {
+				resizeCvs();
+			};
+		  
   		}
   	});
 
