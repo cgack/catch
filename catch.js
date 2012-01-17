@@ -284,6 +284,7 @@ $(document).on('click',
 		//Reset Game
   		if (gameState.victory) {
   			gameState.victory = false;
+  			initLevel();
   		}
   		//get the party started
   		if (!gameState.playing) {
