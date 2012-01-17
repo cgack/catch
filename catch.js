@@ -269,7 +269,7 @@ $(function() {
   };
   
   var initCvs = function() {
-    //resizeCvs();        
+    resizeCvs();        
     //bounce();
     ctx.font = "3em Lucida Console";
   	ctx.fillText("try to catch the ball", 200,200);
