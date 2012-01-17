@@ -157,7 +157,7 @@ $(function() {
         	if (this.collided) {
   				victory();
         	}
-			context.fillStyle = this.collided === true ? 'red' : b1_color;
+			context.fillStyle = b1_color;
 			context.beginPath();
 			context.arc(this.position.x, this.position.y, r, 0, Math.PI * 2, true);
 			context.fill();
