@@ -249,7 +249,6 @@ $(function() {
   balls.push(new Ball());
 // requestAnim shim layer by Paul Irish
     window.requestAnimFrame = (function(){
-      console.log('raf');
       return  window.requestAnimationFrame       || 
               window.webkitRequestAnimationFrame || 
               window.mozRequestAnimationFrame    || 
