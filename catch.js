@@ -50,8 +50,9 @@ $(function() {
 			currentScore: 10000,
 			victory: false,
 			playing: false
-		};
-     
+		},
+		b1_color = "rgb(255,102,51)",
+		b2_color = "rgb(51,102,255)";     
   /*orientation stuffs*/
   	var initOrientation = function() {
 		var count = 0, gam = 0, bet = 0;
@@ -111,7 +112,7 @@ $(function() {
 		},
 		drawIt: function (coordinates) {
 			ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-			ctx.fillStyle = "rgb(150,150,150)";
+			ctx.fillStyle = b2_color;
 			ctx.beginPath();
 			ctx.arc(coordinates.x, coordinates.y, 25, 0, Math.PI * 2, true);
 			ctx.fill();
@@ -156,7 +157,7 @@ $(function() {
         	if (this.collided) {
   				victory();
         	}
-			context.fillStyle = this.collided === true ? 'red' : '#bada55';
+			context.fillStyle = this.collided === true ? 'red' : b1_color;
 			context.beginPath();
 			context.arc(this.position.x, this.position.y, r, 0, Math.PI * 2, true);
 			context.fill();
@@ -260,12 +261,12 @@ $(function() {
 		ctx.fillText("as quickly as possible", 200,250);
 		ctx.fillText("Tap or Click to begin", 200, 350);
 		//draw ball
-		ctx.fillStyle = "#bada55";
+		ctx.fillStyle = b1_color;
 		ctx.beginPath();
 		ctx.arc(715, 182, 20, 0, Math.PI * 2, true);
 		ctx.fill();
 		
-		ctx.fillStyle = "rgb(150,150,150)";
+		ctx.fillStyle = b2_color;
 		ctx.beginPath();
 		ctx.arc(465, 130, 25, 0, Math.PI * 2, true);
 		ctx.fill();
