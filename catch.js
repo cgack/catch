@@ -143,7 +143,6 @@ $(function() {
   };
 
   var victory = function() {
-  	initLevel();
   	ctx.font = "3em Lucida Console";
 	ctx.fillText("victory! Your score: " + gameState.currentScore, 200,200);
 	ctx.fillText("Tap or Click to continue", 200, 250);
@@ -201,28 +200,8 @@ $(function() {
 
       },
       checkObjectCollisions: function() {            
-          var imgData;// = context.getImageData(this.position.x + this.velocity.x1, this.position.y + this.velocity.x2, r, r);
-          var pix;// = imgData.data;
-          /*for (var i = 0, n = pix.length; i < n; i += 4) {
-              //check if we're not on a white pixel
-              if (pix[i] !== 0) {
-                  this.collided = true;
-                  if (Math.abs(this.velocity.x1) > Math.abs(this.velocity.x2)){
-                      this.velocity.x1 = -this.velocity.x1 * drag;
-                  } else {
-                      this.velocity.x2 = -this.velocity.x2 * drag;
-
-                  }
-                  
-                  break;
-              } else {
-                  this.collided = false;
-
-              }
-
-          }*/
-          imgData = ctx.getImageData(this.position.x + this.velocity.x1, this.position.y + this.velocity.x2, r, r);
-          pix = imgData.data;
+          var imgData = ctx.getImageData(this.position.x + this.velocity.x1, this.position.y + this.velocity.x2, r, r),
+          	  pix = imgData.data;
           for (i = 0, n = pix.length; i < n; i += 4) {
               //check if we're not on a white pixel                
               if (pix[i] !== 0) {
@@ -284,7 +263,7 @@ $(document).on('click',
 		//Reset Game
   		if (gameState.victory) {
   			gameState.victory = false;
-  			initLevel();
+  			ctx.clearRect(0, 0, canvasWidth, canvasHeight);
   		}
   		//get the party started
   		if (!gameState.playing) {
