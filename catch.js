@@ -262,12 +262,12 @@ $(function() {
 		//draw ball
 		ctx.fillStyle = "#bada55";
 		ctx.beginPath();
-		ctx.arc(690, 185, 20, 0, Math.PI * 2, true);
+		ctx.arc(720, 185, 20, 0, Math.PI * 2, true);
 		ctx.fill();
 		
 		ctx.fillStyle = "rgb(150,150,150)";
 		ctx.beginPath();
-		ctx.arc(450, 130, 25, 0, Math.PI * 2, true);
+		ctx.arc(465, 130, 25, 0, Math.PI * 2, true);
 		ctx.fill();
 	};
  
