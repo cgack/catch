@@ -255,8 +255,8 @@ $(function() {
 	var initCvs = function() {
 		resizeCvs();        
 		ctx.font = "3em Helvetica";
-		ctx.fillText("Use this &rarr;", 200,150);
-		ctx.fillText("to try and catch this" + &rarr;, 200,200);
+		ctx.fillText("Use this →", 200,150);
+		ctx.fillText("to try and catch this →", 200,200);
 		ctx.fillText("as quickly as possible", 200,250);
 		ctx.fillText("Tap or Click to begin", 200, 350);
 		//draw ball
