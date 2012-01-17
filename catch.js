@@ -257,6 +257,7 @@ $(function() {
 
 	$(document).on('click', function() {
 		//Reset Game
+		$("#y").html('clicked');
   		if (gameState.victory) {
   			gameState.victory = false;
   			ctx.clearRect(0, 0, canvasWidth, canvasHeight);
