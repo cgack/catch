@@ -91,6 +91,9 @@ $(function() {
 					coor.y = coor.y - 10;
 					break;
 			}
+			if (!gameState.victory && gameState.playing) {
+				tgt.move(coor);
+			}
 		});
 		
 	};
