@@ -255,13 +255,13 @@ $(function() {
 	var initCvs = function() {
 		resizeCvs();        
 		ctx.font = "3em Helvetica";
-		ctx.fillText("Try to catch the ball", 200,200);
+		ctx.fillText("Try to catch the ball ->", 200,200);
 		ctx.fillText("as quickly as possible", 200,250);
 		ctx.fillText("Tap or Click to begin", 200, 350);
 		//draw ball
 		ctx.fillStyle = "#bada55";
 		ctx.beginPath();
-		ctx.arc(600, 200, 20, 0, Math.PI * 2, true);
+		ctx.arc(750, 180, 20, 0, Math.PI * 2, true);
 		ctx.fill();
 	};
  
