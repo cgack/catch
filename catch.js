@@ -47,9 +47,9 @@ $(function() {
           y1: 0
       },
       gameState = { 
-      	currentScore = 10000,
-      	victory = false,
-      	playing = false
+      	currentScore: 10000,
+      	victory: false,
+      	playing: false
       };
   var resizeCvs = function() {
     canvasWidth = $(window).width();
