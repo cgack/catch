@@ -262,7 +262,7 @@ $(function() {
 		//draw ball
 		ctx.fillStyle = "#bada55";
 		ctx.beginPath();
-		ctx.arc(715, 188, 20, 0, Math.PI * 2, true);
+		ctx.arc(715, 182, 20, 0, Math.PI * 2, true);
 		ctx.fill();
 		
 		ctx.fillStyle = "rgb(150,150,150)";
