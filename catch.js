@@ -237,8 +237,7 @@ $(function() {
 		ctx.font = "3em Helvetica";
 		ctx.fillText("try to catch the ball", 200,200);
 		ctx.fillText("as quickly as possible", 200,250);
-		ctx.fillText("Tap or Click to begin", 200, 300);
-		$("#y").html("initCvs");
+		ctx.fillText("Tap or Click to begin", 200, 350);
 	};
  
 	initCvs();
@@ -246,7 +245,7 @@ $(function() {
 	var victory = function() {
 		ctx.font = "3em Lucida Console";
 		ctx.fillText("victory! Your score: " + gameState.currentScore, 200,200);
-		ctx.fillText("Tap or Click to continue", 200, 250);
+		ctx.fillText("Tap or Click to continue", 200, 300);
 		gameState.currentScore = 10000;
 		gameState.victory = true;
 	};
@@ -254,7 +253,6 @@ $(function() {
 
 	$(document).on('click', function() {
 		//Reset Game
-		$("#y").html('clicked');
   		if (gameState.victory) {
   			gameState.victory = false;
   			ctx.clearRect(0, 0, canvasWidth, canvasHeight);
