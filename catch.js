@@ -151,7 +151,7 @@ $(function() {
         if (this.collided) {
 //          alert("victory! Your score: " + currentScore);
   			ctx.font = "3em Lucida Console";
-  			ctx.fillText("victory! Your score: " + currentScore, 200, 200);
+  			ctx.fillText("victory! Your score: " + currentScore + "\nTap or Click to continue", 200, 200);
   			currentScore = 10000;
   			victory = true;
         }
@@ -302,5 +302,13 @@ $(function() {
       balls.push(ball);
   });
 */
+
+$(document).on('click', 
+	function() {
+  		if (victory) {
+  			victory = false;
+  		}
+  		});
+  			
 
 });
