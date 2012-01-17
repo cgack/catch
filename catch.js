@@ -53,13 +53,13 @@ $(function() {
 		};
      
   /*orientation stuffs*/
-  	var count = 0, gam = 0, bet = 0;
-	if (window.DeviceOrientationEvent) {
-		window.addEventListener("deviceorientation", function(e) {
-			//gamma = left to right
-			//beta = front back
-			//alpha = compass dir
-			if (gameState.playing) {
+  	var initOrientation = function() {
+		var count = 0, gam = 0, bet = 0;
+		if (window.DeviceOrientationEvent) {
+			window.addEventListener("deviceorientation", function(e) {
+				//gamma = left to right
+				//beta = front back
+				//alpha = compass dir
 				count = count + 1;
 				gam += e.gamma;
 				bet += e.beta;
@@ -69,10 +69,10 @@ $(function() {
 					gam = 0;
 					bet = 0;
 				}
-			}
-		}, false);
-	}
-  
+			}, false);
+		}
+	};
+	
 	var orientationYo = function(ltr, ftb) {
 		coor.x = coor.x + ltr;
 		coor.y = coor.y + ftb;
@@ -265,6 +265,7 @@ $(function() {
   		if (!gameState.playing) {
   			gameState.playing = true;
   			resizeCvs();
+  			initOrientation();
   			bounce();
   			tgt.start(coor);
   		}
