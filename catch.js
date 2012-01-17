@@ -46,8 +46,11 @@ $(function() {
           x1: 0,
           y1: 0
       },
-      currentScore = 10000,
-      victory = false;
+      gameState = { 
+      	currentScore = 10000,
+      	victory = false,
+      	playing = false
+      };
   var resizeCvs = function() {
     canvasWidth = $(window).width();
     canvasHeight = $(window).height();
@@ -81,7 +84,7 @@ $(function() {
   var orientationYo = function(ltr, ftb) {
     coor.x = coor.x + ltr;
     coor.y = coor.y + ftb;
-    if (!victory) {
+    if (!gameState.victory && gameState.playing) {
     	draw.move(coor);   
     }
   };
@@ -131,7 +134,6 @@ $(function() {
 
   var initLevel = function() {
       context.clearRect(0, 0, canvasWidth, canvasHeight);
-     drawShape();
   };
 
   var Ball = function() {
@@ -140,6 +142,14 @@ $(function() {
       drag = 1;
   };
 
+  var victory = function() {
+  	initLevel();
+  	ctx.font = "3em Lucida Console";
+	ctx.fillText("victory! Your score: " + gameState.currentScore, 200,200);
+	ctx.fillText("Tap or Click to continue", 200, 250);
+	gameState.currentScore = 10000;
+	gameState.victory = true;
+  };
 
   Ball.prototype = {
       collided: false,
@@ -150,12 +160,7 @@ $(function() {
                       //draw Ball
         if (this.collided) {
 //          alert("victory! Your score: " + currentScore);
-  			initLevel();
-  			ctx.font = "3em Lucida Console";
-  			ctx.fillText("victory! Your score: " + currentScore, 200,200);
-  			ctx.fillText("Tap or Click to continue", 200, 250);
-  			currentScore = 10000;
-  			victory = true;
+  			victory();
         }
           context.fillStyle = this.collided === true ? 'red' : '#bada55';
           context.beginPath();
@@ -163,8 +168,8 @@ $(function() {
           context.fill();
       },
       move: function() {
-      	  if (!victory) {
-			  currentScore = currentScore - 15;
+      	  if (!gameState.victory && gameState.playing) {
+			  gameState.currentScore = gameState.currentScore - 15;
 			  this.velocity = this.velocity.add(g);
 			  initLevel();
 	
@@ -196,9 +201,9 @@ $(function() {
 
       },
       checkObjectCollisions: function() {            
-          var imgData = context.getImageData(this.position.x + this.velocity.x1, this.position.y + this.velocity.x2, r, r);
-          var pix = imgData.data;
-          for (var i = 0, n = pix.length; i < n; i += 4) {
+          var imgData;// = context.getImageData(this.position.x + this.velocity.x1, this.position.y + this.velocity.x2, r, r);
+          var pix;// = imgData.data;
+          /*for (var i = 0, n = pix.length; i < n; i += 4) {
               //check if we're not on a white pixel
               if (pix[i] !== 0) {
                   this.collided = true;
@@ -215,7 +220,7 @@ $(function() {
 
               }
 
-          }
+          }*/
           imgData = ctx.getImageData(this.position.x + this.velocity.x1, this.position.y + this.velocity.x2, r, r);
           pix = imgData.data;
           for (i = 0, n = pix.length; i < n; i += 4) {
@@ -239,20 +244,6 @@ $(function() {
       }
   };
 
-  var drawShape = function() {
-    /* no shape for now   
-    context.fillStyle = "rgb(150,150,150)";
-      context.beginPath();
-      context.moveTo(200, 100);
-      context.lineTo(300, 125);
-      context.lineTo(250, 175);
-      context.lineTo(200, 200);
-      context.lineTo(200, 100);
-      context.fill();
-      context.closePath();
-    */
-      
-  };
 
   var balls = [];
   balls.push(new Ball());
@@ -272,13 +263,6 @@ $(function() {
     requestAnimFrame( bounce );
     balls[0].move();
   };
-  /*var bouncing = null;
-  bouncing = setInterval(function() {
-      balls.forEach(function(ball) {
-          ball.move();
-      });
-  }, 25);
-  */
   initLevel();
   
   window.onresize = function() {
@@ -286,31 +270,29 @@ $(function() {
   };
   
   var initCvs = function() {
-    resizeCvs();        
-    bounce();
+    //resizeCvs();        
+    //bounce();
+    ctx.font = "3em Lucida Console";
+  	ctx.fillText("try to catch the ball", 200,200);
+  	ctx.fillText("as quickly as possible", 200,250);
+  	ctx.fillText("Tap or Click to begin", 200, 300);
+  			
   };
  
   initCvs();
-  /*
-  var start;
-  $("#canvas").mousedown(function(event) {
-      start = new Point(event.pageX - $("#canvas").offset().left, event.pageY);
-  }).mouseup(function(event) {
-      var end = new Point(event.pageX - $("#canvas").offset().left, event.pageY);
-      var ball = new Ball();
-      ball.position = end;
-      ball.velocity = start.relative(end).scale(0.2);
-      ball.move();
-      balls.push(ball);
-  });
-*/
-
 $(document).on('click', 
 	function() {
-  		if (victory) {
-  			victory = false;
+		//Reset Game
+  		if (gameState.victory) {
+  			gameState.victory = false;
   		}
-  		});
+  		//get the party started
+  		if (!gameState.playing) {
+  			gameState.playing = true;
+  			resizeCvs();
+  			bounce();
+  		}
+  	});
   			
 
 });
