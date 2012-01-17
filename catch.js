@@ -73,10 +73,6 @@ $(function() {
 		} 
 		//or use keys to move:
 		$(document).keydown(function (e) {
-			// H - 72 - left
-			// L - 76 - right
-			// J - 74 - up
-			// K - 75 - dwn
 			switch (e.which) {
 				case 72: /*H - Left*/
 					coor.x = coor.x - 10;
@@ -276,7 +272,7 @@ $(function() {
 	};
 
 
-	$(document).on('click', function() {
+	$(document).on('click', function(e) {
 		//Reset Game
   		if (gameState.victory) {
   			gameState.victory = false;
@@ -293,6 +289,11 @@ $(function() {
 				resizeCvs();
 			};
 		  
+  		}
+  		if (gameState.playing) {
+  			coor.x = e.pageX;
+  			coor.y = e.pageY;
+  			tgt.move(coor);
   		}
   	});
 
