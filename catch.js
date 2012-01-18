@@ -1,54 +1,41 @@
-/*init();
-		var count = 0;
-	
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is catch.
+ *
+ * The Initial Developer of the Original Code is
+ * cgack.
+ * Portions created by the Initial Developer are Copyright (C) 2___
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ * Cory Gack
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
 
-		function init() {
-			if (window.DeviceOrientationEvent) {
-				// Listen for the deviceorientation event and handle the raw data
-				window.addEventListener('deviceorientation', function(eventData) {
-					// gamma is the left-to-right tilt in degrees, where right is positive
-					var tiltLR = eventData.gamma;
-					
-					// beta is the front-to-back tilt in degrees, where front is positive
-					var tiltFB = eventData.beta;
-					
-					// alpha is the compass direction the device is facing in degrees
-					var dir = eventData.alpha
-					
-					// deviceorientation does not provide this data
-					var motUD = null;
-					
-					// call our orientation event handler
-					deviceOrientationHandler(tiltLR, tiltFB, dir, motUD);
-					}, false);
-			} 
-		}
-          
-		function deviceOrientationHandler(tiltLR, tiltFB, dir, motionUD) {
-                        coor.x = coor.x + tiltLR;
-                        coor.y = coor.y + tiltFB;
-                        draw["move"](coor);                 
-		}
-*/          
-          /*var cvs = document.getElementById("cvs"),
-              ctx = cvs.getContext("2d"),
-              img,
-              img2;
-            */  
-          /*  
-          
-          var resizeCvs = function() {
-            var w = $(window).width(),
-                h = $(window).height();
-            ctx.canvas.width = w;
-            ctx.canvas.height =  h;
-           };
-        */
-          
-         
-         
 /*Math Utlities*/
-
 function Point(x, y) {
     this.x = x;
     this.y = y;
@@ -82,306 +69,280 @@ Vector.prototype = {
 };
 
 $(function() {
-  var canvasWidth,
-      canvasHeight,
-      r = 15,
-      canvas = document.getElementById('canvas'),
-      context = canvas.getContext('2d'),
-      cvs = document.getElementById('cvs'),
-      ctx = cvs.getContext('2d'),
-      g = new Vector(0, 0.981),
-      drag = 1.2,
-      bound = {
-          x1: 0,
-          y1: 0
-      };
-  var resizeCvs = function() {
-    canvasWidth = $(window).width();
-    canvasHeight = $(window).height();
-    bound.x2 = canvasWidth;
-    bound.y2 = canvasHeight;
-    context.canvas.width = canvasWidth;
-    context.canvas.height = canvasHeight;
-    ctx.canvas.width = canvasWidth;
-    ctx.canvas.height = canvasHeight;
-  };
-      /*
-       var initializeCvs = function () {
-            ctx.lineCap = "round";
-            ctx.save();
-            resizeCvs();
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-            ctx.restore();            
-          };
-        */    
-      
+	var canvasWidth,
+		canvasHeight,
+		r = 20,
+		canvas = document.getElementById('canvas'),
+		context = canvas.getContext('2d'),
+		cvs = document.getElementById('cvs'),
+		ctx = cvs.getContext('2d'),
+		g = new Vector(0, 0.981),
+		drag = 1.2,
+		bound = {
+			x1: 0,
+			y1: 0
+		},
+		gameState = { 
+			currentScore: 10000,
+			victory: false,
+			playing: false
+		},
+		b1_color = "rgb(255,102,51)",
+		b2_color = "rgb(51,102,255)";     
   /*orientation stuffs*/
-  var count = 0, gam = 0, bet = 0;
-  if (window.DeviceOrientationEvent) {
-    window.addEventListener("deviceorientation", function(e) {
-      //gamma = left to right
-      //beta = front back
-      //alpha = compass dir
-      count = count + 1;
-      gam += e.gamma;
-      bet += e.beta;
-     
-      if (count === 0 || count % 10 === 0) {
-      orientationYo(gam, bet);
-        gam = 0;
-        bet = 0;
-      }
-    }, false);
-  }
+  	var initOrientation = function() {
+		var count = 0, gam = 0, bet = 0;
+		if (window.DeviceOrientationEvent) {
+			window.addEventListener("deviceorientation", function(e) {
+				//gamma = left to right
+				//beta = front back
+				//alpha = compass dir
+				count = count + 1;
+				gam += e.gamma;
+				bet += e.beta;
+				 
+				if (count === 0 || count % 10 === 0) {
+					orientationYo(gam, bet);
+					gam = 0;
+					bet = 0;
+				}
+			}, false);
+		} 
+		//or use keys to move:
+		$(document).keydown(function (e) {
+			switch (e.which) {
+				case 72: /*H - Left*/
+					coor.x = coor.x - 10;
+					break;
+				case 76: /*L - Right*/
+					coor.x = coor.x + 10;
+					break;
+				case 74: /*J - dwn*/
+					coor.y = coor.y + 10;
+					break;
+				case 75: /*K - up*/
+					coor.y = coor.y - 10;
+					break;
+			}
+			if (!gameState.victory && gameState.playing) {
+				tgt.move(coor);
+			}
+		});
+		
+	};
+	
+	var orientationYo = function(ltr, ftb) {
+		coor.x = coor.x + ltr;
+		coor.y = coor.y + ftb;
+		if (!gameState.victory && gameState.playing) {
+			tgt.move(coor);   
+		}
+	};
   
-  var orientationYo = function(ltr, ftb) {
-    coor.x = coor.x + ltr;
-    coor.y = coor.y + ftb;
-    draw.move(coor);   
-  };
-  var prevCoor = { x: 0, y: 0 };
-  var draw = {
-    isDrawing: false,
-    collided: false,
-    start: function(coordinates) {
-      this.drawIt(coordinates);
-//        ctx.moveTo(coordinates.x, coordinates.y);
-  //      prevCoor.x  = coordinates.x;
-    //    prevCoor.y = coordinates.y;
-        this.isDrawing = true;
-    },
-    drawIt: function (coordinates) {
-        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-        ctx.fillStyle = "rgb(150,150,150)";
-        //ctx.lineWidth = 10;
-        ctx.beginPath();
-        ctx.arc(coordinates.x, coordinates.y, 20, 0, Math.PI * 2, true);
-        ctx.fill();
-    },
-    move: function(coordinates) {
-        if (this.isDrawing) {
-          
-          //bounds
-          this.checkBounds(coordinates);
-         
-         // this.checkCollision(coordinates);
-          if (this.collided) {
-            $("#y").html("prevY: " + prevCoor.y + " prevX: " + prevCoor.x + " Y: " + coordinates.y + " X: " + coordinates.x);
-            ctx.fillStyle = ctx.strokeStyle == "red" ? "rgb(150,150,150)" : "red" ;
-          }
-          /*
-            ctx.lineTo(coordinates.x, coordinates.y);
-            prevCoor.x  = coordinates.x;
-            prevCoor.y = coordinates.y;
-            ctx.stroke();*/
-          this.drawIt(coordinates);
-        }
-    },
-    finish: function(coordinates) {
-        this.isDrawing = false;
-        ctx.lineTo(coordinates.x, coordinates.y);
-        ctx.stroke();
-        ctx.closePath();                
-    },
-    checkBounds: function(coordinates) {
-         if (coordinates.y > bound.y2) {
-            coordinates.y = bound.y2;
-          } else if (coordinates.y < bound.y1) {
-            coordinates.y = bound.y1;
-          } else if (coordinates.x > bound.x2) {
-            coordinates.x = bound.x2;
-          } else if (coordinates.x < bound.x1) {
-            coordinates.x = bound.x1;
-          }
-    },
-    checkCollision: function(coordinates) {
-      var imgData = ctx.getImageData(coordinates.x, coordinates.y, ctx.lineWidth, ctx.lineWidth );
-      var pix = imgData.data;
-      for (var i = 0, n = pix.length; i < n; i += 4) {
-          //check if we're not on a white pixel
-          if (pix[i] !== 0) {
-              this.collided = true;
-              
-              break;
-          } else {
-              this.collided = false;
+	var tgt = {
+		isDrawing: false,
+		collided: false,
+		start: function(coordinates) {
+		  	this.drawIt(coordinates);
+			this.isDrawing = true;
+		},
+		drawIt: function (coordinates) {
+			ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+			ctx.fillStyle = b2_color;
+			ctx.beginPath();
+			ctx.arc(coordinates.x, coordinates.y, 25, 0, Math.PI * 2, true);
+			ctx.fill();
+		},
+		move: function(coordinates) {
+			if (this.isDrawing) {
+			  this.checkBounds(coordinates);
+			  this.drawIt(coordinates);
+			}
+		},
+		finish: function(coordinates) {
+			this.isDrawing = false;
+			ctx.lineTo(coordinates.x, coordinates.y);
+			ctx.stroke();
+			ctx.closePath();                
+		},
+		checkBounds: function(coordinates) {
+			 if (coordinates.y > bound.y2) {
+				coordinates.y = bound.y2;
+			  } else if (coordinates.y < bound.y1) {
+				coordinates.y = bound.y1;
+			  } else if (coordinates.x > bound.x2) {
+				coordinates.x = bound.x2;
+			  } else if (coordinates.x < bound.x1) {
+				coordinates.x = bound.x1;
+			  }
+		}
+  	};
+  	var coor = { x: 300, y: 150 };
+  	var Ball = function() {
+		  this.position = new Point(200, 200);
+		  this.velocity = new Vector(getSign() * getRand(25), getSign() * getRand(25));
+		  drag = 1;
+	  };
+	  
+	var getRand = function(rng) {
+		return Math.floor(Math.random() * rng);
+	};
+	
+	var getSign = function () {
+		return Math.random() < 0.5 ? -1 : 1;
+	};
 
-          }
+	Ball.prototype = {
+		collided: false,
+		draw: function() {
+			if (this.collided) {
+				victory();
+			}
+			context.fillStyle = b1_color;
+			context.beginPath();
+			context.arc(this.position.x, this.position.y, r, 0, Math.PI * 2, true);
+			context.fill();
+		},
+		move: function() {
+			if (!gameState.victory && gameState.playing) {
+				gameState.currentScore = gameState.currentScore - 15;
+				this.velocity = this.velocity.add(g);
+				initLevel();
+				this.checkBoundaryCollisions();
+				this.checkObjectCollisions();
+				this.position.x += this.velocity.x1;
+				this.position.y += this.velocity.x2;
+				this.draw();
+			}
+		},
+		checkBoundaryCollisions: function() {
+			if (this.position.y > bound.y2) {
+				this.velocity.x2 = -this.velocity.x2 * drag;
+				this.position.y = bound.y2;
+			} else if (this.position.y < bound.y1) {
+				this.velocity.x2 = -this.velocity.x2 * drag;
+				this.position.y = bound.y1;
+			}
+			if (this.position.x < bound.x1) {
+				this.velocity.x1 = -this.velocity.x1 * drag;
+				this.position.x = bound.x1;
+			} else {
+				if (this.position.x > bound.x2) {
+					this.velocity.x1 = -this.velocity.x1 * drag;
+					this.position.x = bound.x2;
+				}
+			}
+		},
+		checkObjectCollisions: function() {
+			var imgData = ctx.getImageData(this.position.x + this.velocity.x1, this.position.y + this.velocity.x2, r, r),
+				pix = imgData.data;
+			for (i = 0, n = pix.length; i < n; i += 4) {
+				if (pix[i] !== 0) {
+					this.collided = true;
+					if (Math.abs(this.velocity.x1) > Math.abs(this.velocity.x2)){
+						this.velocity.x1 = -this.velocity.x1 * drag;
+					} else {
+						this.velocity.x2 = -this.velocity.x2 * drag;
+					}
+					break;
+				} else {
+					this.collided = false;
+				}
+			}
+		}
+	};
 
-      }
-    }
-  };
-  var coor = { x: 200, y: 200 };
-  draw.start(coor);
 
-  var initLevel = function() {
-      context.clearRect(0, 0, canvasWidth, canvasHeight);
-     drawShape();
-  };
+	var balls = [];
+	balls.push(new Ball());
+	
+	// requestAnim shim layer by Paul Irish
+	window.requestAnimFrame = (function(){
+		return  window.requestAnimationFrame	|| 
+			window.webkitRequestAnimationFrame	|| 
+			window.mozRequestAnimationFrame		|| 
+			window.oRequestAnimationFrame		|| 
+			window.msRequestAnimationFrame		|| 
+			function(/* function */ callback, /* DOMElement */ element){
+				window.setTimeout(callback, 1000 / 30);
+			};
+	})();
+	
+	var bounce = function() {
+		requestAnimFrame( bounce );
+		balls[0].move();
+	};
+	
+	var initLevel = function() {
+		context.clearRect(0, 0, canvasWidth, canvasHeight);
+	};
+	
+	initLevel();
+	
+	var resizeCvs = function() {
+		canvasWidth = $(window).width();
+		canvasHeight = $(window).height();
+		bound.x2 = canvasWidth;
+		bound.y2 = canvasHeight;
+		context.canvas.width = canvasWidth;
+		context.canvas.height = canvasHeight;
+		ctx.canvas.width = canvasWidth;
+		ctx.canvas.height = canvasHeight;
+	};
+	
+	var initCvs = function() {
+		resizeCvs();        
+		ctx.font = "3em Helvetica";
+		ctx.fillText("Use this →", 200,150);
+		ctx.fillText("to try and catch this →", 200,200);
+		ctx.fillText("as quickly as possible", 200,250);
+		ctx.fillText("Tap or Click to begin", 200, 350);
+		//draw ball
+		ctx.fillStyle = b1_color;
+		ctx.beginPath();
+		ctx.arc(715, 182, 20, 0, Math.PI * 2, true);
+		ctx.fill();
+		
+		ctx.fillStyle = b2_color;
+		ctx.beginPath();
+		ctx.arc(465, 130, 25, 0, Math.PI * 2, true);
+		ctx.fill();
+	};
+	
+	initCvs();
+	
+	var victory = function() {
+		ctx.fillStyle="black";
+		ctx.font = "3em Helvetica";
+		ctx.fillText("Victory! Your score: " + gameState.currentScore, 200,200);
+		ctx.fillText("Tap or Click to continue", 200, 300);
+		gameState.currentScore = 10000;
+		gameState.victory = true;
+	};
 
-  var Ball = function() {
-      this.position = new Point(200, 200);
-      this.velocity = new Vector(-5, 5);
-      drag = 1;
-  };
 
-
-  Ball.prototype = {
-      collided: false,
-      remove: function() {
-          this.output.remove();
-      },
-      draw: function() {
-                      //draw Ball
-        if (this.collided) {
-          alert("victory!");
-        }
-          context.fillStyle = this.collided === true ? 'red' : '#bada55';
-          context.beginPath();
-          context.arc(this.position.x, this.position.y, r, 0, Math.PI * 2, true);
-          context.fill();
-      },
-      move: function() {
-
-          this.velocity = this.velocity.add(g);
-          initLevel();
-
-          this.checkBoundaryCollisions();
-          this.checkObjectCollisions();
-
-          this.position.x += this.velocity.x1;
-          this.position.y += this.velocity.x2;
-          this.draw();
-
-      },
-      checkBoundaryCollisions: function() {
-          if (this.position.y > bound.y2) {
-              this.velocity.x2 = -this.velocity.x2 * drag;
-              this.position.y = bound.y2;
-          } else if (this.position.y < bound.y1) {
-              this.velocity.x2 = -this.velocity.x2 * drag;
-              this.position.y = bound.y1;
-          }
-          if (this.position.x < bound.x1) {
-              this.velocity.x1 = -this.velocity.x1 * drag;
-              this.position.x = bound.x1;
-          } else {
-              if (this.position.x > bound.x2) {
-                  this.velocity.x1 = -this.velocity.x1 * drag;
-                  this.position.x = bound.x2;
-              }
-          }
-
-      },
-      checkObjectCollisions: function() {            
-          var imgData = context.getImageData(this.position.x + this.velocity.x1, this.position.y + this.velocity.x2, r, r);
-          var pix = imgData.data;
-          for (var i = 0, n = pix.length; i < n; i += 4) {
-              //check if we're not on a white pixel
-              if (pix[i] !== 0) {
-                  this.collided = true;
-                  if (Math.abs(this.velocity.x1) > Math.abs(this.velocity.x2)){
-                      this.velocity.x1 = -this.velocity.x1 * drag;
-                  } else {
-                      this.velocity.x2 = -this.velocity.x2 * drag;
-
-                  }
-                  
-                  break;
-              } else {
-                  this.collided = false;
-
-              }
-
-          }
-          imgData = ctx.getImageData(this.position.x + this.velocity.x1, this.position.y + this.velocity.x2, r, r);
-          pix = imgData.data;
-          for (i = 0, n = pix.length; i < n; i += 4) {
-              //check if we're not on a white pixel                
-              if (pix[i] !== 0) {
-                  this.collided = true;
-                  if (Math.abs(this.velocity.x1) > Math.abs(this.velocity.x2)){
-                      this.velocity.x1 = -this.velocity.x1 * drag;
-                  } else {
-                      this.velocity.x2 = -this.velocity.x2 * drag;
-
-                  }
-                  
-                  break;
-              } else {
-                  this.collided = false;
-
-              }
-
-          }
-      }
-  };
-
-  var drawShape = function() {
-    /* no shape for now   
-    context.fillStyle = "rgb(150,150,150)";
-      context.beginPath();
-      context.moveTo(200, 100);
-      context.lineTo(300, 125);
-      context.lineTo(250, 175);
-      context.lineTo(200, 200);
-      context.lineTo(200, 100);
-      context.fill();
-      context.closePath();
-    */
-      
-  };
-
-  var balls = [];
-  balls.push(new Ball());
-// requestAnim shim layer by Paul Irish
-    window.requestAnimFrame = (function(){
-      console.log('raf');
-      return  window.requestAnimationFrame       || 
-              window.webkitRequestAnimationFrame || 
-              window.mozRequestAnimationFrame    || 
-              window.oRequestAnimationFrame      || 
-              window.msRequestAnimationFrame     || 
-              function(/* function */ callback, /* DOMElement */ element){
-                window.setTimeout(callback, 1000 / 10);
-              };
-    })();
-  var bounce = function() {
-    requestAnimFrame( bounce );
-    balls[0].move();
-  };
-  /*var bouncing = null;
-  bouncing = setInterval(function() {
-      balls.forEach(function(ball) {
-          ball.move();
-      });
-  }, 25);
-  */
-  initLevel();
-  
-  window.onresize = function() {
-    resizeCvs();
-  };
-  
-  var initCvs = function() {
-    resizeCvs();        
-    bounce();
-  };
- 
-  initCvs();
-  /*
-  var start;
-  $("#canvas").mousedown(function(event) {
-      start = new Point(event.pageX - $("#canvas").offset().left, event.pageY);
-  }).mouseup(function(event) {
-      var end = new Point(event.pageX - $("#canvas").offset().left, event.pageY);
-      var ball = new Ball();
-      ball.position = end;
-      ball.velocity = start.relative(end).scale(0.2);
-      ball.move();
-      balls.push(ball);
-  });
-*/
-
+	$(document).on('click', function(e) {
+		//Reset Game
+		if (gameState.victory) {
+			gameState.victory = false;
+			ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+		}
+		//get the party started
+		if (!gameState.playing) {
+			gameState.playing = true;
+			resizeCvs();
+			initOrientation();
+			bounce();
+			tgt.start(coor);
+			window.onresize = function() {
+				resizeCvs();
+			};
+		
+		}
+		if (gameState.playing) {
+			coor.x = e.pageX;
+			coor.y = e.pageY;
+			tgt.move(coor);
+		}
+	});
 });
