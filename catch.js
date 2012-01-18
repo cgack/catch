@@ -146,7 +146,7 @@ $(function() {
   	};
   	var coor = { x: 300, y: 150 };
   	var Ball = function() {
-		  this.position = new Point(getRand(canvasWidth), getRand(canvasHeight));
+		  this.position = new Point(200, 200);
 		  this.velocity = new Vector(getSign() * getRand(25), getSign() * getRand(25));
 		  drag = 1;
 	  };
