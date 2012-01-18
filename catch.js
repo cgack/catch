@@ -146,11 +146,15 @@ $(function() {
   	};
   	var coor = { x: 300, y: 150 };
   	var Ball = function() {
-		  this.position = new Point(200, 200);
-		  this.velocity = new Vector(getSign() * (Math.floor(Math.random() * 25)), getSign() * (Math.floor(Math.random() * 25)));
+		  this.position = new Point(getRand(canvasWidth), getRand(canvasHeight));
+		  this.velocity = new Vector(getSign() * getRand(25), getSign() * getRand(25));
 		  drag = 1;
 	  };
 	  
+	var getRand = function(rng) {
+		return Math.floor(Math.random() * rng);
+	};
+	
 	var getSign = function () {
 		return Math.random() < 0.5 ? -1 : 1;
 	};
