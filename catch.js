@@ -151,7 +151,7 @@ $(function() {
 		  drag = 1;
 	  };
 	var getRand = function(rng) {
-		return Math.floor(Math.random() * rng);
+		return Math.floor(Math.random() * parseInt(rng));
 	};
 	var getSign = function () {
 		return Math.random() < 0.5 ? -1 : 1;
