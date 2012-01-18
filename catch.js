@@ -217,14 +217,14 @@ $(function() {
 	
 	// requestAnim shim layer by Paul Irish
 	window.requestAnimFrame = (function(){
-		return function(/* function */ callback, /* DOMElement */ element){
-				window.setTimeout(callback, 1000 / 30);
-			}; /*window.requestAnimationFrame	|| 
+		return  window.requestAnimationFrame	|| 
 			window.webkitRequestAnimationFrame	|| 
 			window.mozRequestAnimationFrame		|| 
 			window.oRequestAnimationFrame		|| 
-			window.msRequestAnimationFrame		|| */
-			
+			window.msRequestAnimationFrame		|| 
+			function(/* function */ callback, /* DOMElement */ element){
+				window.setTimeout(callback, 1000 / 30);
+			};
 	})();
 	
 	var bounce = function() {
