@@ -147,7 +147,7 @@ $(function() {
   	var coor = { x: 300, y: 150 };
   	var Ball = function() {
 		  this.position = new Point(200, 200);
-		  this.velocity = new Vector(getSign * (Math.floor(Math.random() * 25)), getSign * (Math.floor(Math.random() * 25)));
+		  this.velocity = new Vector(-1* (Math.floor(Math.random() * 25)),  (Math.floor(Math.random() * 25)));
 		  drag = 1;
 	  };
 	  
