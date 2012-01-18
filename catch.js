@@ -1,5 +1,8 @@
-/*Math Utlities*/
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+/*Math Utlities*/
 function Point(x, y) {
     this.x = x;
     this.y = y;
@@ -34,7 +37,7 @@ Vector.prototype = {
 
 $(function() {
 	var canvasWidth,
-      	canvasHeight,
+		canvasHeight,
 		r = 20,
 		canvas = document.getElementById('canvas'),
 		context = canvas.getContext('2d'),
@@ -150,56 +153,49 @@ $(function() {
 
 	Ball.prototype = {
 		collided: false,
-      	remove: function() {
-        	this.output.remove();
-      	},
-      	draw: function() {
-        	if (this.collided) {
-  				victory();
-        	}
+		draw: function() {
+			if (this.collided) {
+				victory();
+			}
 			context.fillStyle = b1_color;
 			context.beginPath();
 			context.arc(this.position.x, this.position.y, r, 0, Math.PI * 2, true);
 			context.fill();
-      	},
-      	move: function() {
-    		if (!gameState.victory && gameState.playing) {
-			  	gameState.currentScore = gameState.currentScore - 15;
-			  	this.velocity = this.velocity.add(g);
-			  	initLevel();
-	
-			  	this.checkBoundaryCollisions();
-			  	this.checkObjectCollisions();
-	
-			  	this.position.x += this.velocity.x1;
-			  	this.position.y += this.velocity.x2;
+		},
+		move: function() {
+			if (!gameState.victory && gameState.playing) {
+				gameState.currentScore = gameState.currentScore - 15;
+				this.velocity = this.velocity.add(g);
+				initLevel();
+				this.checkBoundaryCollisions();
+				this.checkObjectCollisions();
+				this.position.x += this.velocity.x1;
+				this.position.y += this.velocity.x2;
 				this.draw();
 			}
 		},
 		checkBoundaryCollisions: function() {
 			if (this.position.y > bound.y2) {
-			  this.velocity.x2 = -this.velocity.x2 * drag;
-			  this.position.y = bound.y2;
+				this.velocity.x2 = -this.velocity.x2 * drag;
+				this.position.y = bound.y2;
 			} else if (this.position.y < bound.y1) {
-			  this.velocity.x2 = -this.velocity.x2 * drag;
-			  this.position.y = bound.y1;
+				this.velocity.x2 = -this.velocity.x2 * drag;
+				this.position.y = bound.y1;
 			}
 			if (this.position.x < bound.x1) {
-			  this.velocity.x1 = -this.velocity.x1 * drag;
-			  this.position.x = bound.x1;
+				this.velocity.x1 = -this.velocity.x1 * drag;
+				this.position.x = bound.x1;
 			} else {
-			  if (this.position.x > bound.x2) {
-				  this.velocity.x1 = -this.velocity.x1 * drag;
-				  this.position.x = bound.x2;
-			  }
+				if (this.position.x > bound.x2) {
+					this.velocity.x1 = -this.velocity.x1 * drag;
+					this.position.x = bound.x2;
+				}
 			}
-
-      	},
-		checkObjectCollisions: function() {            
+		},
+		checkObjectCollisions: function() {
 			var imgData = ctx.getImageData(this.position.x + this.velocity.x1, this.position.y + this.velocity.x2, r, r),
 				pix = imgData.data;
 			for (i = 0, n = pix.length; i < n; i += 4) {
-				//check if we're not on a white pixel                
 				if (pix[i] !== 0) {
 					this.collided = true;
 					if (Math.abs(this.velocity.x1) > Math.abs(this.velocity.x2)){
@@ -220,26 +216,26 @@ $(function() {
 	balls.push(new Ball());
 	
 	// requestAnim shim layer by Paul Irish
-    window.requestAnimFrame = (function(){
-      return  window.requestAnimationFrame       || 
-              window.webkitRequestAnimationFrame || 
-              window.mozRequestAnimationFrame    || 
-              window.oRequestAnimationFrame      || 
-              window.msRequestAnimationFrame     || 
-              function(/* function */ callback, /* DOMElement */ element){
-                window.setTimeout(callback, 1000 / 30);
-              };
-    })();
+	window.requestAnimFrame = (function(){
+		return  window.requestAnimationFrame	|| 
+			window.webkitRequestAnimationFrame	|| 
+			window.mozRequestAnimationFrame		|| 
+			window.oRequestAnimationFrame		|| 
+			window.msRequestAnimationFrame		|| 
+			function(/* function */ callback, /* DOMElement */ element){
+				window.setTimeout(callback, 1000 / 30);
+			};
+	})();
+	
 	var bounce = function() {
 		requestAnimFrame( bounce );
 		balls[0].move();
 	};
-  
-  
+	
 	var initLevel = function() {
-	  context.clearRect(0, 0, canvasWidth, canvasHeight);
+		context.clearRect(0, 0, canvasWidth, canvasHeight);
 	};
-
+	
 	initLevel();
 	
 	var resizeCvs = function() {
@@ -251,8 +247,8 @@ $(function() {
 		context.canvas.height = canvasHeight;
 		ctx.canvas.width = canvasWidth;
 		ctx.canvas.height = canvasHeight;
-	};   
-   
+	};
+	
 	var initCvs = function() {
 		resizeCvs();        
 		ctx.font = "3em Helvetica";
@@ -271,9 +267,9 @@ $(function() {
 		ctx.arc(465, 130, 25, 0, Math.PI * 2, true);
 		ctx.fill();
 	};
- 
+	
 	initCvs();
-
+	
 	var victory = function() {
 		ctx.fillStyle="black";
 		ctx.font = "3em Helvetica";
@@ -286,27 +282,26 @@ $(function() {
 
 	$(document).on('click', function(e) {
 		//Reset Game
-  		if (gameState.victory) {
-  			gameState.victory = false;
-  			ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-  		}
-  		//get the party started
-  		if (!gameState.playing) {
-  			gameState.playing = true;
-  			resizeCvs();
-  			initOrientation();
-  			bounce();
-  			tgt.start(coor);
+		if (gameState.victory) {
+			gameState.victory = false;
+			ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+		}
+		//get the party started
+		if (!gameState.playing) {
+			gameState.playing = true;
+			resizeCvs();
+			initOrientation();
+			bounce();
+			tgt.start(coor);
 			window.onresize = function() {
 				resizeCvs();
 			};
-		  
-  		}
-  		if (gameState.playing) {
-  			coor.x = e.pageX;
-  			coor.y = e.pageY;
-  			tgt.move(coor);
-  		}
-  	});
-
+		
+		}
+		if (gameState.playing) {
+			coor.x = e.pageX;
+			coor.y = e.pageY;
+			tgt.move(coor);
+		}
+	});
 });
